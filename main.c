@@ -11,11 +11,10 @@
  * @return int 処理結果
  */
 int main(void) {
-    CLogger* clogger = clogger_create(LOG_LEVEL_DEBUG);
     const char* clogger_ver = clogger_get_version();
     printf("clogger version: %s\n", clogger_ver);
-    clogger_debug(clogger, "Hello world");
-    clogger_destroy(clogger);
 
+    // clogger_debug("My name is %s", "Hello world");
+    clogger_info("My name is %s", "Hello world");
     return EXIT_SUCCESS;
 }

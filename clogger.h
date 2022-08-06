@@ -8,6 +8,8 @@
 #ifndef _CLOGGER_H__
 #define _CLOGGER_H__
 
+#include <stdio.h>
+
 /** モジュールバージョン */
 #define CLOGGER_VER "1.0.0"
 
@@ -30,34 +32,20 @@ typedef enum {
     LOG_TYPE_FILE = 0x02     //!< ファイル出力
 } LOG_TYPE;
 
-/**
- *
- */
-typedef struct clogger_t CLogger;
+/** デバッグ出力 */
+#define clogger_debug(...) clogger_logging(LOG_LEVEL_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 
-/**
- * ログ情報初期化
- *
- * @param [in] log_level ログ出力レベル
- * @return CLogger ログ設定情報ポインタ
- */
-extern CLogger* clogger_create(LOG_LEVEL log_level);
+/** インフォ出力 */
+#define clogger_info(...) clogger_logging(LOG_LEVEL_INFO, __FILE__, __LINE__, __VA_ARGS__)
 
-/**
- * ログ情報破棄
- *
- * @param [in] clogger ログ情報
- * @return void
- */
-extern void clogger_destroy(CLogger* clogger);
+/** ワーニング出力 */
+#define clogger_warning(...) clogger_logging(LOG_LEVEL_WARNING, __FILE__, __LINE__, __VA_ARGS__)
 
-/**
- * デバッグログ出力
- *
- * @param [in] clogger ログ情報
- * @return void
- */
-extern void clogger_debug(const CLogger* clogger, const char* text);
+/** エラー出力 */
+#define clogger_error(...) clogger_logging(LOG_LEVEL_ERROR, __FILE__, __LINE__, __VA_ARGS__)
+
+/** クリティカル出力 */
+#define clogger_critical(...) clogger_logging(LOG_LEVEL_CRITICAL, __FILE__, __LINE__, __VA_ARGS__)
 
 /**
  * モジュールバージョン取得
@@ -65,5 +53,58 @@ extern void clogger_debug(const CLogger* clogger, const char* text);
  * @return char* バージョン情報
  */
 extern const char* clogger_get_version();
+
+/**
+ * ログ出力
+ *
+ * @param [in] level ログレベル
+ * @param [in] file ファイル名
+ * @param [in] line ログ出力したプログラムの行数
+ * @return void
+ */
+void clogger_logging(const LOG_LEVEL level, const char* filename, const int line, const char* fmt, ...);
+
+/**
+ * ログファイルパス設定
+ *
+ * @param [in] path ファイルパス
+ * @return void
+ */
+extern void clogger_set_log_file_path(const char* path);
+
+/**
+ * ログレベル設定
+ *
+ * @param [in] path ファイルパス
+ * @return void
+ */
+extern void clogger_set_log_level(const LOG_LEVEL log_level);
+
+/**
+ * 対象ログレベルの出力種別設定
+ *
+ * @param [in] log_level ログレベル
+ * @param [in] log_type ログ種別
+ * @return void
+ */
+extern void clogger_set_config_log_type(const LOG_LEVEL log_level, const LOG_TYPE log_type);
+
+/**
+ * 対象ログレベルのファイル名設定
+ *
+ * @param [in] log_level ログレベル
+ * @param [in] filename ファイル名
+ * @return void
+ */
+extern void clogger_set_config_filename(const LOG_LEVEL log_level, const char* filename);
+
+/**
+ * 対象ログレベルのファイルサイズ設定
+ *
+ * @param [in] log_level ログレベル
+ * @param [in] filesize ファイルサイズ
+ * @return void
+ */
+extern void clogger_set_config_filesize(const LOG_LEVEL log_level, const unsigned int filesize);
 
 #endif // _CLOGGER_H__
