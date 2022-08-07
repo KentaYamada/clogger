@@ -138,8 +138,8 @@ void clogger_set_log_level(const LOG_LEVEL log_level) {
     clogger.log_level = log_level;
 }
 
-void clogger_set_log_file_path(const char *path) {
-    memset(clogger.log_path, 0, sizeof(clogger.log_path));
+void clogger_set_log_file_path(const char *path, const size_t len) {
+    memset(clogger.log_path, 0, len);
     strcpy(clogger.log_path, path);
 }
 
@@ -151,11 +151,11 @@ void clogger_set_config_log_type(const LOG_LEVEL log_level, const LOG_TYPE log_t
     }
 }
 
-void clogger_set_config_filename(const LOG_LEVEL log_level, const char *filename) {
+void clogger_set_config_filename(const LOG_LEVEL log_level, const char *filename, const size_t filename_len) {
     struct clogger_config_t* config = get_clogger_config(log_level);
 
     if (config != NULL) {
-        memset(config->filename, 0, sizeof(config->filename));
+        memset(config->filename, 0, filename_len);
         strcpy(config->filename, filename);
     }
 }

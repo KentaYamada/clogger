@@ -68,9 +68,10 @@ void clogger_logging(const LOG_LEVEL level, const char* filename, const int line
  * ログファイルパス設定
  *
  * @param [in] path ファイルパス
+ * @param [in] len ファイルパス領域のサイズ
  * @return void
  */
-extern void clogger_set_log_file_path(const char* path);
+extern void clogger_set_log_file_path(const char* path, const size_t len);
 
 /**
  * ログレベル設定
@@ -94,9 +95,10 @@ extern void clogger_set_config_log_type(const LOG_LEVEL log_level, const LOG_TYP
  *
  * @param [in] log_level ログレベル
  * @param [in] filename ファイル名
+ * @param [in] filename_len ファイル名領域のサイズ
  * @return void
  */
-extern void clogger_set_config_filename(const LOG_LEVEL log_level, const char* filename);
+extern void clogger_set_config_filename(const LOG_LEVEL log_level, const char* filename, const size_t filename_len);
 
 /**
  * 対象ログレベルのファイルサイズ設定
